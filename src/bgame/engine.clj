@@ -1,7 +1,7 @@
 (ns bgame.engine
   (:require [clojure.spec.alpha :as s]
-            [bgame.vec :require :all :as v]
-            [bgame.model :require :all :as m]))
+            [bgame.vec  :as v]
+            [bgame.model  :as m]))
 
 
 
@@ -10,8 +10,7 @@
 ;;
 
 (defn move-object [o]
-  {:pre (s/valid? :bgame.model/moving-object o)}
-  (let [new-pos (v/v-add (o ::m/position) (o ::m/speed))])
+  {:pre (s/valid? :m/moving-object o)}
   (update o ::m/position v/v-add (o ::m/speed)))
 
 ;;
@@ -61,8 +60,8 @@
 (defn next-step
   "calcs the next state of the entities to be shown"
   [[world input]]
-  {:pre  (s/valid? :bgame.model/world world)
-   :post (s/valid? :bgame.model/world %)}
+  {:pre  (s/valid? :m/world world)
+   :post (s/valid? :m/world %)}
   (reduce (fn [[world input] f] (f world input))
           [world input]
           @*engine-parts*))

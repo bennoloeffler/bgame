@@ -30,7 +30,7 @@
                (mapv class (into [x y] xs)))))
 
 (defmethod v-create [Number Number]
-  [x y & xs]
+  [x y & _]
   "create vector from 0/0 to x/y"
   (V. x y))
 
@@ -40,9 +40,11 @@
   (V. (- (first xy2) x1) (- (second xy2) y1)))
 
 (defmethod v-create [V V]
-  [v1 v2 & xs]
+  [v1 v2 & _]
   "create difference vector v1 to v2"
   (V. (- (:x v2) (:x v1)) (- (:y v2) (:y v1))))
+
+(def v v-create) ; does this work?
 
 (defn v-rand
   "randomly create vector in the given range"
@@ -70,6 +72,18 @@
     (+
       (Math/pow (- (:x to-v) (:x from-v)) 2)
       (Math/pow (- (:y to-v) (:y from-v)) 2))))
+
+
+(defn v-minus
+  "subtract two vectors (v1 - v2) - or just get negative values of v1"
+  ([v1]
+   (V. (- (:x v1)) (- (:y v1))))
+  ([v1 v2]
+   {:pre [v1 v2] :post [%]}
+   (V.
+     (- (:x v1) (:x v2))
+     (- (:y v1) (:y v2)))))
+
 
 (defn v-add
   "add two vectors"
@@ -130,7 +144,7 @@
   (* alpha (/ Math/PI 180)))
 
 (defn v-rotate
-  "rotate around zero point PI = 180° left"
+  "rotate around zero point (PI = 180° left)"
   [v pi-angle]
   (V.
     (- (* (:x v) (Math/cos pi-angle)) (* (:y v) (Math/sin pi-angle)))
