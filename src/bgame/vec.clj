@@ -24,8 +24,11 @@
            0/0 to x/y
            or
            pos1 to pos2.
-           Given as x1 y1 x2 y2
-           or as vector v1 v2"
+           Given as
+           x1 y2 or
+           x1 y1 x2 y2
+           or as vector
+           v1 v2"
           (fn ([x y & xs]
                (mapv class (into [x y] xs)))))
 
@@ -44,7 +47,8 @@
   "create difference vector v1 to v2"
   (V. (- (:x v2) (:x v1)) (- (:y v2) (:y v1))))
 
-(def v v-create) ; does this work?
+(def v v-create) ; SHORTCUT for all v-create functions
+
 
 (defn v-rand
   "randomly create vector in the given range"
@@ -128,6 +132,13 @@
   [v]
   (let [l (v-len v)]
     (== l 1.0)))
+
+
+; https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+#_(defn v-intercept
+    "intersection point of two lines"
+    [v1-from v2-to v3-from v4-to])
+
 
 ;;
 ;; ----------- everything with angles -----------

@@ -8,7 +8,8 @@
             [clojure.tools.namespace.repl :refer (refresh refresh-all clear)]
             [debux.core :refer :all]
             [hashp.core :refer :all]
-            [bels-test-runner :refer [call-current-tests]])
+            [bels-test-runner :refer [call-current-tests]]
+            [bgame.ui-quil :as ui])
   (:use tupelo.core))
 
 ; https://github.com/stuartsierra/component.repl
@@ -21,19 +22,23 @@
   "Constructs the current development system."
   []
   (alter-var-root #'system
-    (constantly {} #_(system/system))))
+    (constantly {:init true} #_(system/system))))
 
 (defn start
   "Starts the current development system."
   []
-  (alter-var-root #'system (constantly {:started true} #_system/start)))
+  (println "STARTING...")
+  (alter-var-root #'system ui/start))
 
 (defn stop
   "Shuts down and destroys the current development system."
   []
-  (alter-var-root #'system (constantly {:stopped true})
-    #_(fn [s] (when s (system/stop s)))))
 
+  (alter-var-root #'system
+    (fn [s] (if s (do (println "STOPPING...")
+                      (bgame.ui-quil/stop s))
+
+                  (println "nothing to stop...")))))
 (defn go
   "Initializes the current development system and starts it running."
   []
@@ -42,7 +47,8 @@
 
 (defn reset []
   (stop)
-  (refresh :after 'user/go))
+  (refresh-all :after 'user/go)) ; refresh does it not with quil...
+
 
 (defn tests []
    (refresh :after 'bels-test-runner/call-current-tests))
@@ -55,6 +61,7 @@
   (init)
   (reset)
   (tests)
+  (refresh-all)
   (pprint system))
 
 ; RUNNING TESTs per WATCHER all the time
