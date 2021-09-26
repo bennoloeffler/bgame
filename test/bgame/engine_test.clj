@@ -5,7 +5,7 @@
             [bgame.model :as m]
             [puget.printer :refer [cprint]]
             [hashp.core :refer :all])
-  (:import (bgame.vec V)))
+  (:import (belib.vec V)))
 
 
 (def test-model

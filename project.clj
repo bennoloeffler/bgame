@@ -17,6 +17,9 @@
                                   [org.clojure/java.classpath "1.0.0"]
                                   [nrepl,"0.8.3"]
                                   [vlaaad/reveal "1.3.212"]]
+
                    :repl-options {:nrepl-middleware [vlaaad.reveal.nrepl/middleware]}
                    :plugins [[com.jakemccrary/lein-test-refresh "0.24.1"] ; lein test-refresh
-                             [venantius/ultra "0.6.0"]]}})
+                             [venantius/ultra "0.6.0"]
+                             [metosin/bat-test "0.4.4"] ; lein bat-test auto ;see eftest
+                             [lein-cloverage "1.2.2"]]}}) ; lein cloverage]}})

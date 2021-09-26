@@ -1,7 +1,7 @@
 (ns bgame.model
   (:require [clojure.spec.alpha :as s]
-            [bgame.vec :as v])
-  (:import (bgame.vec V)))
+            [belib.vec :as v])
+  (:import (belib.vec V)))
 
 (s/def ::id (s/or ::number int? ::name string?))
 (s/def ::position v/v?)

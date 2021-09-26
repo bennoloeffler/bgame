@@ -1,7 +1,7 @@
 (ns bgame.engine
   (:use tupelo.core)
   (:require [clojure.spec.alpha :as s]
-            [bgame.vec :as v]
+            [belib.vec :as v]
             [bgame.model :as m]
             [clojure.core.async :refer [chan >!! <!!]]))
 
